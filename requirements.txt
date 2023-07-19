@@ -1,0 +1,5 @@
+tabulate
+pyfiglet
+cowsay
+colorama
+random
