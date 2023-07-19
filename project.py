@@ -3,6 +3,9 @@ from pyfiglet import Figlet
 import random
 import sys
 import cowsay
+from colorama import Fore, Back, Style, init
+
+init(autoreset=True)
 
 figlet = Figlet()
 fonts = figlet.getFonts()
@@ -80,7 +83,8 @@ def main():
         else:
             cowsay.cow('\nTHAT\'S A TIE!!!\n')
         while True:
-            answ = input('\nTRY AGAIN? [y/n]\n')
+            answ = input(Fore.GREEN + '\nTRY AGAIN? [y/n]: ')
+            print()
             if answ in ['y', 'n']:
                 try_again = answ
                 break
@@ -97,17 +101,17 @@ def start_game():
             return mode
         else:
             # remind the user of how to use the program
-            print('\nUsage: type 1 or 2 to choose mode')
+            print(Fore.RED + '\nUsage: type 1 or 2 to choose mode\n')
 
 def player_move(player):
     global board
     while True:
-        move = input(f"\n'{player}' MAKES A MOVE: ")
+        move = input(Fore.GREEN + f"\n'{player}' MAKES A MOVE: ")
         print()
         if valid_move(move, player):
             break
         else:
-            print('\nInvalid move\n')
+            print(Fore.RED + '\nInvalid move\n')
         
 
 def valid_move(move, player):
@@ -115,16 +119,15 @@ def valid_move(move, player):
         for j, row in enumerate(board.squares):
                 for i, square in enumerate(row):
                     if int(move) == square and int(move) in board.empty:
-                        board.squares[j][i] = player
+                        board.squares[j][i] = Fore.YELLOW + player + Style.RESET_ALL
                         return True
     except ValueError:
         return False
 
 def computer_move():
     move = random.choice(board.empty)
-    print(f"\nCOMPUTER CHOSE {move}\n")
+    print(Fore.GREEN + f"\nCOMPUTER CHOSE {move}\n")
     valid_move(move, 'X')
-
 
 if __name__ == '__main__':
     main()
