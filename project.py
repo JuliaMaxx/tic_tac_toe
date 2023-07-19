@@ -55,20 +55,22 @@ board = Board()
 def main():
     mode = start_game()
     last_move = 'X'
-    if mode == '2':
-        while not board.check_ties() and not board.check_wins():
-            print(board)
-            if last_move == 'X':
-                player_move('O')
-                last_move = 'O'
+    while not board.check_ties() and not board.check_wins():
+        print(board)
+        if last_move == 'X':
+            player_move('O')
+            last_move = 'O'
+        else:
+            if mode == '1':
+                computer_move()
             else:
                 player_move('X')
-                last_move = 'X'
-        print(board)
-        if winner := board.check_wins():
-            print(f'\n{winner} WON THE GAME !!!\n')
-        else:
-            print('\nTHAT\'S A TIE!!!\n')
+            last_move = 'X'
+    print(board)
+    if winner := board.check_wins():
+        print(f'\n{winner} WON THE GAME !!!\n')
+    else:
+        print('\nTHAT\'S A TIE!!!\n')
 
 
 def start_game():
@@ -87,7 +89,8 @@ def start_game():
 def player_move(player):
     global board
     while True:
-        move = input(f"'{player}' MAKES A MOVE: ")
+        move = input(f"\n'{player}' MAKES A MOVE: ")
+        print()
         if valid_move(move, player):
             break
         else:
@@ -105,8 +108,8 @@ def valid_move(move, player):
         return False
 
 def computer_move():
-    print("COMPUTER MAKES A MOVE")
     move = random.choice(board.empty)
+    print(f"\nCOMPUTER CHOSE {move}\n")
     valid_move(move, 'X')
 
 
