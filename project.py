@@ -1,5 +1,6 @@
 from tabulate import tabulate
 from pyfiglet import Figlet
+import random
 import sys
 
 figlet = Figlet()
@@ -53,12 +54,21 @@ board = Board()
 
 def main():
     mode = start_game()
-    if mode == '1':
+    last_move = 'X'
+    if mode == '2':
         while not board.check_ties() and not board.check_wins():
             print(board)
-            player_move()   
-        
-        print('tie/win')
+            if last_move == 'X':
+                player_move('O')
+                last_move = 'O'
+            else:
+                player_move('X')
+                last_move = 'X'
+        print(board)
+        if winner := board.check_wins():
+            print(f'\n{winner} WON THE GAME !!!\n')
+        else:
+            print('\nTHAT\'S A TIE!!!\n')
 
 
 def start_game():
@@ -74,28 +84,30 @@ def start_game():
             # remind the user of how to use the program
             print('\nUsage: type 1 or 2 to choose mode')
 
-def player_move():
+def player_move(player):
     global board
     while True:
-        move = input("MAKE A MOVE: ")
-        if valid_move(move):
+        move = input(f"'{player}' MAKES A MOVE: ")
+        if valid_move(move, player):
             break
         else:
             print('\nInvalid move\n')
         
 
-def valid_move(move):
+def valid_move(move, player):
     try:
         for j, row in enumerate(board.squares):
                 for i, square in enumerate(row):
                     if int(move) == square and int(move) in board.empty:
-                        board.squares[j][i] = 'O'
+                        board.squares[j][i] = player
                         return True
     except ValueError:
         return False
 
 def computer_move():
-    ...
+    print("COMPUTER MAKES A MOVE")
+    move = random.choice(board.empty)
+    valid_move(move, 'X')
 
 
 if __name__ == '__main__':
