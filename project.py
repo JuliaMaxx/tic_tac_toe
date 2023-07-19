@@ -5,6 +5,7 @@ import sys
 figlet = Figlet()
 fonts = figlet.getFonts()
 
+
 class Board:
     def __init__(self):
         self.squares = [
@@ -38,15 +39,26 @@ class Board:
                     return False
         return True
     
+    @property
+    def empty(self):
+        _empty = []
+        for row in self.squares:
+            for square in row:
+                if str(square).isnumeric():
+                    _empty.append(square)
+        return _empty
+    
                 
+board = Board()
 
 def main():
     mode = start_game()
-    board = Board()
-    if not board.check_ties() and not board.check_wins():
-        print('no ties')
-    else:
-        print('tie')
+    if mode == '1':
+        while not board.check_ties() and not board.check_wins():
+            print(board)
+            player_move()   
+        
+        print('tie/win')
 
 
 def start_game():
@@ -63,16 +75,28 @@ def start_game():
             print('\nUsage: type 1 or 2 to choose mode')
 
 def player_move():
-    ...
+    global board
+    while True:
+        move = input("MAKE A MOVE: ")
+        if valid_move(move):
+            break
+        else:
+            print('\nInvalid move\n')
+        
+
+def valid_move(move):
+    try:
+        for j, row in enumerate(board.squares):
+                for i, square in enumerate(row):
+                    if int(move) == square and int(move) in board.empty:
+                        board.squares[j][i] = 'O'
+                        return True
+    except ValueError:
+        return False
 
 def computer_move():
     ...
 
-def check_wins():
-    ...
-
-def check_ties():
-    ...
 
 if __name__ == '__main__':
     main()
