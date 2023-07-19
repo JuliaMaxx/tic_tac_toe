@@ -2,6 +2,7 @@ from tabulate import tabulate
 from pyfiglet import Figlet
 import random
 import sys
+import cowsay
 
 figlet = Figlet()
 fonts = figlet.getFonts()
@@ -53,29 +54,41 @@ class Board:
 board = Board()
 
 def main():
-    mode = start_game()
-    last_move = 'X'
-    while not board.check_ties() and not board.check_wins():
-        print(board)
-        if last_move == 'X':
-            player_move('O')
-            last_move = 'O'
-        else:
-            if mode == '1':
-                computer_move()
+    try_again = 'y'
+    while try_again == 'y':
+        board.squares = [
+            [1, 2, 3],
+            [4, 5, 6], 
+            [7, 8, 9]
+            ]
+        mode = start_game()
+        last_move = 'X'
+        while not board.check_ties() and not board.check_wins():
+            print(board)
+            if last_move == 'X':
+                player_move('O')
+                last_move = 'O'
             else:
-                player_move('X')
-            last_move = 'X'
-    print(board)
-    if winner := board.check_wins():
-        print(f'\n{winner} WON THE GAME !!!\n')
-    else:
-        print('\nTHAT\'S A TIE!!!\n')
+                if mode == '1':
+                    computer_move()
+                else:
+                    player_move('X')
+                last_move = 'X'
+        print(board)
+        if winner := board.check_wins():
+            cowsay.cow(f'\n{winner} WON THE GAME !!!\n')
+        else:
+            cowsay.cow('\nTHAT\'S A TIE!!!\n')
+        while True:
+            answ = input('\nTRY AGAIN? [y/n]\n')
+            if answ in ['y', 'n']:
+                try_again = answ
+                break
 
 
 def start_game():
     # inform the user about the begining of a new game
-    figlet.setFont(font='slant')
+    figlet.setFont(font='small')
     print(figlet.renderText('Game started'))
     # prompt the user for a game mode until valid one is imported
     while True:
