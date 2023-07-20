@@ -4,6 +4,7 @@ import random
 import cowsay
 from colorama import Fore, Style, init
 
+
 # initialize colorama
 init(autoreset=True)
 
@@ -37,7 +38,7 @@ class Board:
 
     def check_ties(self):
         for row in self.squares:
-            # if there are numbers left - it is not a tie
+            # if there are numbers left(empty squares) - it is not a tie
             for square in row:
                 if str(square).isnumeric():
                     return False
@@ -66,11 +67,12 @@ def main():
         board.squares = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
         # get the game mode
         mode = start_game()
-        last_move = "X"
+        # randomly choose who gets to play first based on who played last
+        last_move = random.choice(['X', 'O'])
         # keep making moves until there is a tie or a win
         while not board.check_ties() and not board.check_wins():
             print(board)
-            # itetare moves based on who made the last move
+            # make moves based on who made the last move
             if last_move == "X":
                 player_move("O")
                 last_move = "O"
@@ -88,13 +90,14 @@ def main():
         # declare a tie
         else:
             cowsay.cow("\nTHAT'S A TIE!!!\n")
-        # prompt the user to play again until thay input 'y' or 'n'
+        # prompt the user to play again until they input 'y'(yes) or 'n'(no)
         while True:
             answ = input(Fore.GREEN + "\nTRY AGAIN? [y/n]: ")
             print()
             if answ in ["y", "n"]:
                 try_again = answ
                 break
+
 
 
 def start_game():
@@ -113,6 +116,7 @@ def start_game():
             print(Fore.RED + "\nUsage: type 1 or 2 to choose mode\n")
 
 
+# check if the mode is valid
 def check_mode(mode):
     return mode in ["1", "2"]
 

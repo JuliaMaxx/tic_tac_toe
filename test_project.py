@@ -7,6 +7,7 @@ def test_board_default():
     assert board.check_wins() == None
     assert board.check_ties() == False
 
+
 def test_wins():
     board = Board()
     board.squares = [['X','X','X'],[4, 5, 6],[7, 8, 9]]
@@ -16,10 +17,12 @@ def test_wins():
     board.squares = [[1,2,'O'],[4, 'O', 6],['O', 8, 9]]
     assert board.check_wins() == 'O'
 
+
 def test_ties():
     board = Board()
     board.squares = [['X', 'O', 'X'],['O', 'X', 'O'],['O', 'X', 'O']]
     assert board.check_ties() == True
+
 
 def test_mode():
     assert check_mode('1') == True
@@ -32,6 +35,7 @@ def test_move():
     assert valid_move('1', 'X') == None
     assert valid_move('cat', 'X') == None
     assert valid_move('10', 'X') == None
+
 
 def test_check_int():
     assert check_int('cat') == False
