@@ -1,5 +1,6 @@
 # Colorful Tic Tac Toe Game
 ## Video Demo: https://www.youtube.com/watch?v=Agwv14lih04
+![Screenshot (9)](https://github.com/JuliaMaxy/tic_tac_toe/assets/121096183/a6a16951-8341-4004-a6a6-6a388a89c277)
 ### Description
 A command-line Tic Tac Toe game written exclusively in Python.
 ### Why Tic Tac Toe?
